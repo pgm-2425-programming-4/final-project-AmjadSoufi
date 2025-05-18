@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Backlog from "./Backlog";
 import Pagination from "./Pagination";
@@ -31,11 +31,27 @@ function PaginatedBacklog() {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
 
+  // Laad de data uit de lokale opslag bij het starten van de component
+  useEffect(() => {
+    const savedData = localStorage.getItem("backlogTasks");
+    if (savedData) {
+      // Doe iets met de opgeslagen data, zoals deze in de staat zetten
+      console.log("Loaded data from local storage:", JSON.parse(savedData));
+    }
+  }, []);
+
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["backlogTasks", currentPage, pageSize],
     queryFn: () => fetchBacklogTasks(currentPage, pageSize),
     keepPreviousData: true,
   });
+
+  // Sla de data op in de lokale opslag wanneer deze verandert
+  useEffect(() => {
+    if (data) {
+      localStorage.setItem("backlogTasks", JSON.stringify(data));
+    }
+  }, [data]);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -65,7 +81,7 @@ function PaginatedBacklog() {
     );
   }
 
-  console.log("API Data:", data); 
+  console.log("API Data:", data);
 
   const totalPages = Math.ceil(data.meta.pagination.total / pageSize);
 
