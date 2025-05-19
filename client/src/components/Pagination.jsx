@@ -10,7 +10,7 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
 
   return (
     <nav className="flex justify-center mt-4" aria-label="Pagination">
-      <ul className="inline-flex items-center">
+      <ul className="flex items-center">
         <li>
           <button
             onClick={() => onPageChange(Math.max(1, currentPage - 1))}
