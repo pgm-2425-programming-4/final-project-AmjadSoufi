@@ -17,8 +17,8 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
             disabled={currentPage === 1}
             className={`px-3 py-1 mx-1 rounded ${
               currentPage === 1
-                ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                : 'bg-gray-300 hover:bg-gray-400'
+                ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                : "bg-gray-300 hover:bg-gray-400"
             }`}
             aria-label="Previous page"
           >
@@ -32,11 +32,11 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
               onClick={() => onPageChange(number)}
               className={`px-3 py-1 mx-1 rounded ${
                 currentPage === number
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-300 hover:bg-gray-400'
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-300 hover:bg-gray-400"
               }`}
               aria-label={`Page ${number}`}
-              aria-current={currentPage === number ? 'page' : undefined}
+              aria-current={currentPage === number ? "page" : undefined}
             >
               {number}
             </button>
@@ -49,8 +49,8 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
             disabled={currentPage === totalPages}
             className={`px-3 py-1 mx-1 rounded ${
               currentPage === totalPages
-                ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                : 'bg-gray-300 hover:bg-gray-400'
+                ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+                : "bg-gray-300 hover:bg-gray-400"
             }`}
             aria-label="Next page"
           >

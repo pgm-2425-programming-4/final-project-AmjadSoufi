@@ -31,11 +31,9 @@ function PaginatedBacklog() {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
 
-  // Laad de data uit de lokale opslag bij het starten van de component
   useEffect(() => {
     const savedData = localStorage.getItem("backlogTasks");
     if (savedData) {
-      // Doe iets met de opgeslagen data, zoals deze in de staat zetten
       console.log("Loaded data from local storage:", JSON.parse(savedData));
     }
   }, []);
@@ -46,7 +44,6 @@ function PaginatedBacklog() {
     keepPreviousData: true,
   });
 
-  // Sla de data op in de lokale opslag wanneer deze verandert
   useEffect(() => {
     if (data) {
       localStorage.setItem("backlogTasks", JSON.stringify(data));

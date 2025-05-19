@@ -12,8 +12,7 @@ const Backlog = ({ tasks }) => {
           <tr>
             <th className="py-2 px-4 border-b text-left">ID</th>
             <th className="py-2 px-4 border-b text-left">Title</th>
-            <th className="py-2 px-4 border-b text-left">Created At</th>
-            <th className="py-2 px-4 border-b text-left">Updated At</th>
+
             <th className="py-2 px-4 border-b text-left">Status</th>
           </tr>
         </thead>
@@ -21,19 +20,7 @@ const Backlog = ({ tasks }) => {
           {tasks.map((task) => (
             <tr key={task.id} className="hover:bg-gray-50">
               <td className="py-2 px-4 border-b">{task.id}</td>
-              <td className="py-2 px-4 border-b">
-                {task.attributes?.title || "N/A"}
-              </td>
-              <td className="py-2 px-4 border-b">
-                {task.attributes?.createdAt
-                  ? new Date(task.attributes.createdAt).toLocaleString()
-                  : "N/A"}
-              </td>
-              <td className="py-2 px-4 border-b">
-                {task.attributes?.updatedAt
-                  ? new Date(task.attributes.updatedAt).toLocaleString()
-                  : "N/A"}
-              </td>
+              <td className="py-2 px-4 border-b">{task.title || "N/A"}</td>
               <td className="py-2 px-4 border-b">
                 <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
                   Backlog
