@@ -86,11 +86,13 @@ function PaginatedBacklog() {
     <div>
       <h2 className="text-xl font-semibold mb-4">Backlog Tasks</h2>
       <Backlog tasks={data.data} />
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
+      <div className="flex justify-center">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </div>
   );
 }
