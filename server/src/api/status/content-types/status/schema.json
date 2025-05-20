@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "statuses",
+  "info": {
+    "singularName": "status",
+    "pluralName": "statuses",
+    "displayName": "status",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "statusName": {
+      "type": "string"
+    },
+    "tasks": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::task.task",
+      "mappedBy": "state"
+    }
+  }
+}
