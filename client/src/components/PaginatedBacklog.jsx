@@ -3,9 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 import Backlog from "./Backlog";
 import Pagination from "./Pagination";
 
+const API_URL = import.meta.env.PROD
+  ? "https://jammin-api-tz4x.onrender.com/api"
+  : "http://localhost:1337/api";
+
 const fetchBacklogTasks = async (page, pageSize) => {
   const statusResponse = await fetch(
-    "http://localhost:1337/api/statuses?filters[statusName][$eq]=Backlog"
+    `${API_URL}/statuses?filters[statusName][$eq]=Backlog`
   );
   const statusData = await statusResponse.json();
   console.log("Status Data:", statusData);
@@ -17,7 +21,7 @@ const fetchBacklogTasks = async (page, pageSize) => {
   const backlogStatusId = statusData.data[0].id;
 
   const response = await fetch(
-    `http://localhost:1337/api/tasks?filters[state][id][$eq]=${backlogStatusId}&pagination[page]=${page}&pagination[pageSize]=${pageSize}&sort=createdAt:desc`
+    `${API_URL}/tasks?filters[state][id][$eq]=${backlogStatusId}&pagination[page]=${page}&pagination[pageSize]=${pageSize}&sort=createdAt:desc`
   );
 
   if (!response.ok) {
