@@ -9,7 +9,13 @@ const API_URL = import.meta.env.PROD
 
 const fetchBacklogTasks = async (page, pageSize) => {
   const statusResponse = await fetch(
-    `${API_URL}/statuses?filters[statusName][$eq]=Backlog`
+    `${API_URL}/statuses?filters[statusName][$eq]=Backlog`,
+    {
+      headers: {
+        'Authorization': `Bearer ${API_TOKEN}`,
+        'Content-Type': 'application/json'
+      }
+    }
   );
   const statusData = await statusResponse.json();
   console.log("Status Data:", statusData);
