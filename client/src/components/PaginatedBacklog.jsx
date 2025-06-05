@@ -12,7 +12,7 @@ const fetchBacklogTasks = async (page, pageSize) => {
         Authorization: `Bearer ${API_TOKEN}`,
         "Content-Type": "application/json",
       },
-    }
+    },
   );
 
   if (!statusResponse.ok) {
@@ -35,7 +35,7 @@ const fetchBacklogTasks = async (page, pageSize) => {
         Authorization: `Bearer ${API_TOKEN}`,
         "Content-Type": "application/json",
       },
-    }
+    },
   );
 
   if (!response.ok) {
