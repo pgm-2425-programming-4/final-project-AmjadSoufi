@@ -1,4 +1,4 @@
-export function Pagination({ currentPage, totalPages, onPageChange }) {
+function Pagination({ currentPage, totalPages, onPageChange }) {
   let pageNumberArray;
 
   if (totalPages <= 6) {
@@ -39,27 +39,37 @@ export function Pagination({ currentPage, totalPages, onPageChange }) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center mt-4 w-28">
+    <div className="pagination">
+      {/* Previous Button */}
       <button
         onClick={() => onPageChange(Math.max(1, currentPage - 1))}
         disabled={currentPage === 1}
-        className={`w-full px-3 py-1 mb-2 rounded ${
-          currentPage === 1
-            ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-            : "bg-gray-300 hover:bg-gray-400"
-        }`}
+        className={`btn ${currentPage === 1 ? "btn-secondary" : "btn-primary"}`}
+        style={{
+          opacity: currentPage === 1 ? 0.5 : 1,
+          cursor: currentPage === 1 ? "not-allowed" : "pointer",
+          minWidth: "auto",
+          padding: "0.75rem 1.5rem",
+        }}
         aria-label="Previous page"
       >
-        Previous
+        ← Previous
       </button>
 
-      <div className="flex flex-col items-center w-full mb-2">
+      {/* Page Numbers */}
+      <div className="flex gap-1">
         {pageNumberArray.map((number, index) => {
           if (number === null) {
             return (
               <span
                 key={`ellipsis-${index}`}
-                className="px-2 py-1 text-center w-full"
+                className="text-muted flex-center"
+                style={{
+                  minWidth: "2.5rem",
+                  height: "2.5rem",
+                  fontSize: "1.2rem",
+                  fontWeight: "bold",
+                }}
               >
                 ...
               </span>
@@ -70,11 +80,21 @@ export function Pagination({ currentPage, totalPages, onPageChange }) {
             <button
               key={number}
               onClick={() => onPageChange(number)}
-              className={`w-full px-3 py-1 my-1 rounded ${
-                currentPage === number
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-300 hover:bg-gray-400"
+              className={`btn ${
+                currentPage === number ? "btn-primary active" : "btn-secondary"
               }`}
+              style={{
+                minWidth: "2.5rem",
+                height: "2.5rem",
+                padding: "0",
+                fontWeight: currentPage === number ? "600" : "400",
+                background:
+                  currentPage === number
+                    ? "linear-gradient(45deg, var(--primary), var(--primary-hover))"
+                    : "rgba(255, 255, 255, 0.1)",
+                color: currentPage === number ? "white" : "var(--text-primary)",
+                transform: currentPage === number ? "scale(1.1)" : "scale(1)",
+              }}
               aria-label={`Page ${number}`}
               aria-current={currentPage === number ? "page" : undefined}
             >
@@ -84,37 +104,46 @@ export function Pagination({ currentPage, totalPages, onPageChange }) {
         })}
       </div>
 
+      {/* Dropdown for many pages */}
       {totalPages > 6 && (
-        <div className="w-full mb-2">
-          <select
-            value={currentPage}
-            onChange={(e) => onPageChange(Number(e.target.value))}
-            className="w-full px-2 py-1 border border-gray-300 rounded bg-white"
-            aria-label="Go to specific page"
-          >
-            <option value="" disabled>
-              Go to...
+        <select
+          value={currentPage}
+          onChange={(e) => onPageChange(Number(e.target.value))}
+          className="form-input"
+          style={{
+            width: "120px",
+            padding: "0.5rem",
+            fontSize: "0.875rem",
+          }}
+          aria-label="Go to specific page"
+        >
+          <option value="" disabled>
+            Go to...
+          </option>
+          {allPages.map((page) => (
+            <option key={page} value={page}>
+              Page {page}
             </option>
-            {allPages.map((page) => (
-              <option key={page} value={page}>
-                Page {page}
-              </option>
-            ))}
-          </select>
-        </div>
+          ))}
+        </select>
       )}
 
+      {/* Next Button */}
       <button
         onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
         disabled={currentPage === totalPages}
-        className={`w-full px-3 py-1 rounded ${
-          currentPage === totalPages
-            ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-            : "bg-gray-300 hover:bg-gray-400"
+        className={`btn ${
+          currentPage === totalPages ? "btn-secondary" : "btn-primary"
         }`}
+        style={{
+          opacity: currentPage === totalPages ? 0.5 : 1,
+          cursor: currentPage === totalPages ? "not-allowed" : "pointer",
+          minWidth: "auto",
+          padding: "0.75rem 1.5rem",
+        }}
         aria-label="Next page"
       >
-        Next
+        Next →
       </button>
     </div>
   );
