@@ -5,7 +5,7 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import { API_URL, API_TOKEN } from "../constants/constants";
-import ProjectList from "../components/ProjectList"; // Voeg deze import toe
+import ProjectList from "../components/ProjectList"; 
 
 const queryClient = new QueryClient();
 
@@ -58,7 +58,6 @@ function ProjectsPage() {
     );
   }
 
-  // Zorg dat we de juiste data structuur hebben
   const projects = data?.data || [];
 
   return (

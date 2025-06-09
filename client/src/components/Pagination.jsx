@@ -40,7 +40,6 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
 
   return (
     <div className="pagination">
-      {/* Previous Button */}
       <button
         onClick={() => onPageChange(Math.max(1, currentPage - 1))}
         disabled={currentPage === 1}
@@ -56,7 +55,6 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
         ← Previous
       </button>
 
-      {/* Page Numbers */}
       <div className="flex gap-1">
         {pageNumberArray.map((number, index) => {
           if (number === null) {
@@ -104,7 +102,6 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
         })}
       </div>
 
-      {/* Dropdown for many pages */}
       {totalPages > 6 && (
         <select
           value={currentPage}
@@ -128,7 +125,6 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
         </select>
       )}
 
-      {/* Next Button */}
       <button
         onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
         disabled={currentPage === totalPages}
