@@ -4,6 +4,8 @@ import Backlog from "./Backlog";
 import Pagination from "./Pagination";
 import { API_URL, API_TOKEN } from "../constants/constants";
 
+
+
 const fetchBacklogTasks = async (page, pageSize) => {
   const statusResponse = await fetch(
     `${API_URL}/statuses?filters[statusName][$eq]=Backlog`,
