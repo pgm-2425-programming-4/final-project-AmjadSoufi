@@ -4,6 +4,8 @@ import Backlog from "./Backlog";
 import Pagination from "./Pagination";
 import { API_URL, API_TOKEN } from "../constants/constants";
 
+
+
 const fetchBacklogTasks = async (page, pageSize) => {
   const statusResponse = await fetch(
     `${API_URL}/statuses?filters[statusName][$eq]=Backlog`,
@@ -12,7 +14,7 @@ const fetchBacklogTasks = async (page, pageSize) => {
         Authorization: `Bearer ${API_TOKEN}`,
         "Content-Type": "application/json",
       },
-    }
+    },
   );
 
   if (!statusResponse.ok) {
@@ -35,7 +37,7 @@ const fetchBacklogTasks = async (page, pageSize) => {
         Authorization: `Bearer ${API_TOKEN}`,
         "Content-Type": "application/json",
       },
-    }
+    },
   );
 
   if (!response.ok) {
