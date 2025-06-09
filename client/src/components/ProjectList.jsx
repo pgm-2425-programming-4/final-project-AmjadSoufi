@@ -16,30 +16,24 @@ const ProjectList = ({ projects }) => {
     if (!tasks) return [];
 
     if (showBacklogOnly[projectId]) {
-      // Show ONLY backlog tasks
       return tasks.filter(
         (task) => task.state?.statusName?.toLowerCase() === "backlog"
       );
     }
 
-    // Show NON-backlog tasks (tasks that don't have backlog status)
     return tasks.filter(
       (task) => task.state?.statusName?.toLowerCase() !== "backlog"
     );
   };
 
-  // Helper function to safely render description
   const renderDescription = (description) => {
     if (!description) return null;
 
-    // If it's a string, just return it
     if (typeof description === "string") {
       return <p className="text-secondary mb-3">{description}</p>;
     }
 
-    // If it's an object (rich text), try to extract text
     if (typeof description === "object") {
-      // Skip rendering complex objects to avoid [object Object]
       return null;
     }
 
@@ -62,7 +56,6 @@ const ProjectList = ({ projects }) => {
 
           return (
             <div key={project.id} className="card fade-in">
-              {/* Project Header */}
               <div className="flex-between mb-4">
                 <div className="flex-1">
                   <h3
@@ -99,12 +92,10 @@ const ProjectList = ({ projects }) => {
                 </button>
               </div>
 
-              {/* Tasks Section */}
               {isExpanded && (
                 <div className="fade-in">
                   {allTasks.length > 0 ? (
                     <>
-                      {/* Filter Buttons */}
                       <div className="flex gap-2 mb-4">
                         <button
                           onClick={() =>
@@ -146,7 +137,6 @@ const ProjectList = ({ projects }) => {
                         </button>
                       </div>
 
-                      {/* Tasks List */}
                       {filteredTasks.length > 0 ? (
                         <div
                           className="grid gap-3"

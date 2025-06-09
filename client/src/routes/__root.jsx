@@ -25,7 +25,6 @@ function RootComponent() {
               <h2>ProjectHub</h2>
             </div>
 
-            {/* Hamburger Menu Button */}
             <button
               className={`hamburger ${isMenuOpen ? "active" : ""}`}
               onClick={toggleMenu}
@@ -36,7 +35,6 @@ function RootComponent() {
               <span className="hamburger-line"></span>
             </button>
 
-            {/* Navigation Links */}
             <div className={`nav-links ${isMenuOpen ? "active" : ""}`}>
               <Link
                 to="/"
@@ -77,7 +75,6 @@ function RootComponent() {
             </div>
           </div>
 
-          {/* Mobile Overlay */}
           <div
             className={`nav-overlay ${isMenuOpen ? "active" : ""}`}
             onClick={closeMenu}
