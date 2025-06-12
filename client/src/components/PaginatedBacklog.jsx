@@ -2,11 +2,25 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Backlog from "./Backlog";
 import Pagination from "./Pagination";
+import { API_URL, API_TOKEN } from "../constants/constants";
+
+
 
 const fetchBacklogTasks = async (page, pageSize) => {
   const statusResponse = await fetch(
-    "http://localhost:1337/api/statuses?filters[statusName][$eq]=Backlog"
+    `${API_URL}/statuses?filters[statusName][$eq]=Backlog`,
+    {
+      headers: {
+        Authorization: `Bearer ${API_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+    },
   );
+
+  if (!statusResponse.ok) {
+    throw new Error(`Failed to fetch status: ${statusResponse.status}`);
+  }
+
   const statusData = await statusResponse.json();
   console.log("Status Data:", statusData);
 
@@ -17,11 +31,17 @@ const fetchBacklogTasks = async (page, pageSize) => {
   const backlogStatusId = statusData.data[0].id;
 
   const response = await fetch(
-    `http://localhost:1337/api/tasks?filters[state][id][$eq]=${backlogStatusId}&pagination[page]=${page}&pagination[pageSize]=${pageSize}&sort=createdAt:desc`
+    `${API_URL}/tasks?filters[state][id][$eq]=${backlogStatusId}&pagination[page]=${page}&pagination[pageSize]=${pageSize}&sort=createdAt:desc`,
+    {
+      headers: {
+        Authorization: `Bearer ${API_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+    },
   );
 
   if (!response.ok) {
-    throw new Error("Network response was not ok");
+    throw new Error(`Failed to fetch tasks: ${response.status}`);
   }
 
   return response.json();
@@ -79,7 +99,6 @@ function PaginatedBacklog() {
   }
 
   console.log("API Data:", data);
-
   const totalPages = Math.ceil(data.meta.pagination.total / pageSize);
 
   return (

@@ -1,0 +1,160 @@
+.backlog-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.backlog-header {
+  margin-bottom: 2rem;
+}
+
+.backlog-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.backlog-table {
+  background: var(--bg-card);
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.backlog-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.backlog-table thead {
+  background-color: var(--bg-secondary);
+  border-bottom: 2px solid var(--border);
+}
+
+.backlog-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.backlog-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.backlog-table tr:last-child td {
+  border-bottom: none;
+}
+
+.backlog-table tr:hover {
+  background-color: var(--bg-card-hover);
+}
+
+.backlog-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background-color: var(--warning);
+  color: white;
+}
+
+.backlog-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.backlog-pagination-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 100px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.backlog-pagination-btn:hover:not(:disabled) {
+  background-color: var(--bg-card-hover);
+  border-color: var(--border-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+.backlog-pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.backlog-page-select {
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 0.375rem;
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 8.825L1.175 4 2.05 3.125 6 7.075 9.95 3.125 10.825 4z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 12px;
+  min-width: 120px;
+}
+
+.backlog-page-select:hover {
+  background-color: var(--bg-card-hover);
+  border-color: var(--border-hover);
+}
+
+@media (max-width: 768px) {
+  .backlog-container {
+    padding: 1rem;
+  }
+
+  .backlog-title {
+    font-size: 1.5rem;
+  }
+
+  .backlog-table {
+    border-radius: 0.375rem;
+  }
+
+  .backlog-table th,
+  .backlog-table td {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .backlog-pagination {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .backlog-pagination-btn,
+  .backlog-page-select {
+    min-width: 90px;
+    font-size: 0.75rem;
+    padding: 0.375rem 0.75rem;
+  }
+}
