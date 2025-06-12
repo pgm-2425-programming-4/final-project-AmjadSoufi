@@ -13,8 +13,10 @@ function BacklogPage() {
   return (
     <QueryClientProvider client={queryClient}>
       <ErrorBoundary>
-        <div className="container mx-auto p-4">
-          <PaginatedBacklog />
+        <div className="min-h-screen bg-gray-50 py-8">
+          <div className="container mx-auto px-4">
+            <PaginatedBacklog />
+          </div>
         </div>
       </ErrorBoundary>
     </QueryClientProvider>
