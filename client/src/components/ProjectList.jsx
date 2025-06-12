@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 
-const ProjectList = ({ projects }) => {
+const ProjectList = ({ projects, onAddProject, onAddTask }) => {
   const [expandedProject, setExpandedProject] = useState(null);
   const [showBacklogOnly, setShowBacklogOnly] = useState({});
-
-  if (!projects || projects.length === 0) {
-    return <p className="text-muted">No projects found.</p>;
-  }
+  const [searchQuery, setSearchQuery] = useState("");
 
   const toggleProject = (projectId) => {
     setExpandedProject(expandedProject === projectId ? null : projectId);
@@ -40,10 +37,30 @@ const ProjectList = ({ projects }) => {
     return null;
   };
 
+  const filteredProjects = projects.filter((project) =>
+    project.name?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-    <div className="container">
+    <div className="projects-container">
+      <div className="projects-header">
+        <h2 className="projects-title">Projects</h2>
+        <div className="projects-actions">
+          <input
+            type="text"
+            placeholder="Search projects..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-input"
+          />
+          <button onClick={onAddProject} className="action-button primary">
+            <span>+</span> New Project
+          </button>
+        </div>
+      </div>
+
       <div className="grid gap-4">
-        {projects.map((project) => {
+        {filteredProjects.map((project) => {
           const allTasks = project.tasks || [];
           const backlogTasks = allTasks.filter(
             (task) => task.state?.statusName?.toLowerCase() === "backlog"
@@ -83,20 +100,27 @@ const ProjectList = ({ projects }) => {
                   </div>
                 </div>
 
-                <button
-                  onClick={() => toggleProject(project.id)}
-                  className={`btn ${isExpanded ? "btn-secondary" : "btn-primary"}`}
-                  style={{ marginLeft: "1rem" }}
-                >
-                  {isExpanded ? "Hide Tasks" : "Show Tasks"}
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => toggleProject(project.id)}
+                    className={`btn ${isExpanded ? "btn-secondary" : "btn-primary"}`}
+                  >
+                    {isExpanded ? "Hide Tasks" : "Show Tasks"}
+                  </button>
+                  <button
+                    onClick={() => onAddTask(project.id)}
+                    className="btn btn-success"
+                  >
+                    <span className="mr-1">+</span> Add Task
+                  </button>
+                </div>
               </div>
 
               {isExpanded && (
                 <div className="fade-in">
                   {allTasks.length > 0 ? (
                     <>
-                      <div className="flex gap-2 mb-4">
+                      <div className="tasks-header">
                         <button
                           onClick={() =>
                             setShowBacklogOnly((prev) => ({
@@ -109,10 +133,6 @@ const ProjectList = ({ projects }) => {
                               ? "btn-success"
                               : "btn-secondary"
                           }`}
-                          style={{
-                            fontSize: "0.875rem",
-                            padding: "0.5rem 1rem",
-                          }}
                         >
                           Active Tasks ({nonBacklogTasks.length})
                         </button>
@@ -128,83 +148,38 @@ const ProjectList = ({ projects }) => {
                               ? "btn-warning"
                               : "btn-secondary"
                           }`}
-                          style={{
-                            fontSize: "0.875rem",
-                            padding: "0.5rem 1rem",
-                          }}
                         >
                           Backlog ({backlogTasks.length})
                         </button>
                       </div>
 
                       {filteredTasks.length > 0 ? (
-                        <div
-                          className="grid gap-3"
-                          style={{
-                            maxHeight: "400px",
-                            overflowY: "auto",
-                            paddingRight: "0.5rem",
-                          }}
-                        >
+                        <div className="tasks-list">
                           {filteredTasks.map((task) => (
-                            <div
-                              key={task.id}
-                              className="todo-item slide-in"
-                              style={{
-                                borderLeft: `4px solid ${
-                                  task.state?.statusName?.toLowerCase() ===
-                                  "backlog"
-                                    ? "var(--warning)"
-                                    : "var(--primary)"
-                                }`,
-                                background:
-                                  task.state?.statusName?.toLowerCase() ===
-                                  "backlog"
-                                    ? "rgba(245, 158, 11, 0.1)"
-                                    : "rgba(99, 102, 241, 0.1)",
-                              }}
-                            >
-                              <div className="flex-between">
-                                <div className="flex-1">
-                                  <p
-                                    className="text-primary"
-                                    style={{
-                                      fontWeight: "500",
-                                      marginBottom: "0.5rem",
-                                    }}
-                                  >
-                                    {task.title || `Task #${task.id}`}
-                                  </p>
-                                  {task.description &&
-                                    typeof task.description === "string" && (
-                                      <p
-                                        className="text-secondary"
-                                        style={{ fontSize: "0.875rem" }}
-                                      >
-                                        {task.description}
-                                      </p>
-                                    )}
-                                </div>
-                                <div style={{ marginLeft: "1rem" }}>
-                                  {task.state?.statusName && (
-                                    <span
-                                      className={`badge ${
-                                        task.state.statusName.toLowerCase() ===
-                                        "backlog"
-                                          ? "badge-warning"
-                                          : "badge-primary"
-                                      }`}
-                                    >
-                                      {task.state.statusName}
-                                    </span>
-                                  )}
-                                </div>
+                            <div key={task.id} className="task-item">
+                              <div className="task-header">
+                                <h4 className="task-title">
+                                  {task.title || `Task #${task.id}`}
+                                </h4>
                               </div>
-
-                              <div
-                                className="flex-between mt-3 text-muted"
-                                style={{ fontSize: "0.75rem" }}
-                              >
+                              {task.state?.statusName && (
+                                <span
+                                  className={`task-status ${
+                                    task.state.statusName.toLowerCase() ===
+                                    "backlog"
+                                      ? "backlog"
+                                      : "active"
+                                  }`}
+                                >
+                                  {task.state.statusName}
+                                </span>
+                              )}
+                              {task.description && (
+                                <p className="task-description">
+                                  {task.description}
+                                </p>
+                              )}
+                              <div className="task-meta">
                                 <span>ID: {task.id}</span>
                                 {task.createdAt && (
                                   <span>
@@ -219,11 +194,8 @@ const ProjectList = ({ projects }) => {
                           ))}
                         </div>
                       ) : (
-                        <div
-                          className="text-center"
-                          style={{ padding: "2rem" }}
-                        >
-                          <p className="text-muted">
+                        <div className="no-tasks">
+                          <p>
                             No{" "}
                             {showBacklogOnly[project.id] ? "backlog" : "active"}{" "}
                             tasks found
@@ -232,10 +204,8 @@ const ProjectList = ({ projects }) => {
                       )}
                     </>
                   ) : (
-                    <div className="text-center" style={{ padding: "2rem" }}>
-                      <p className="text-muted">
-                        No tasks assigned to this project
-                      </p>
+                    <div className="no-tasks">
+                      <p>No tasks assigned to this project</p>
                     </div>
                   )}
                 </div>
